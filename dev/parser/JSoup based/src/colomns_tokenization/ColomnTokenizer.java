@@ -6,6 +6,7 @@ import org.w3c.css.sac.InputSource;
 import org.w3c.dom.css.CSSRule;
 import org.w3c.dom.css.CSSRuleList;
 import org.w3c.dom.css.CSSStyleDeclaration;
+import org.w3c.dom.css.CSSStyleRule;
 import org.w3c.dom.css.CSSStyleSheet;
 
 import com.steadystate.css.parser.CSSOMParser;
@@ -24,12 +25,45 @@ public class ColomnTokenizer {
 		// TODO Auto-generated method stub
 		
 		//css_test(); [OK]
+		
+		css_selector_test();
 			
+
+		
+	}
+	public static void mix_test(){
 		try {
 			File input = new File("1.html");
-			Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
-			Element page = doc.select("div.Sect1").first();
-			System.out.println(page.id());
+			//HTML Parsing
+			Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");			
+			//***CSS Parsing
+			Element style_tag = doc.select("style").first();			
+			InputSource source = new InputSource( new StringReader (style_tag.data()));
+			CSSOMParser css_parser = new CSSOMParser(new SACParserCSS3());
+			CSSStyleSheet css_tree;			
+				css_tree = css_parser.parseStyleSheet(source, null, null);
+			//Get html tag
+			Element p_tag = doc.select("p.P81").first();
+			//Get the CSS rule of the tag
+			String css_class = p_tag.className();
+			
+			// List out all css rules
+			String css_rule = "";
+			CSSRuleList rules = css_tree.getCssRules();
+			
+			css_rule = get_css_rule_by_class_name(rules, p_tag.className());// primitive non standard way
+			
+			// Get 
+			InputSource source1 = new InputSource(new StringReader("font-size: 12pt; font-family: Liberation Serif; writing-mode: page; margin-left: 0.4638in; margin-right: 0.4035in; margin-top: 0.0575in; margin-bottom: 0in; line-height: 95%; text-indent: 0in"));
+			CSSStyleDeclaration decl = css_parser.parseStyleDeclaration(source1);
+
+			for (int i = 0; i < decl.getLength(); i++) {
+			    final String propName = decl.item(i);
+
+			    System.out.println("'" + propName + "' has value: '" + decl.getPropertyValue(propName) + "'");
+			}
+			System.out.println(p_tag.className());
+			System.out.println(css_rule);
 			
 			
 			} 
@@ -38,10 +72,16 @@ public class ColomnTokenizer {
 				e.printStackTrace();
 				System.out.println("In catch block !!!");
 			}
-			
-
 		
 	}
+	public static String get_css_rule_by_class_name(CSSRuleList css_rules, String css_class_name ) {
+		for (int i = 0; i < css_rules.getLength(); i++) {
+		    final CSSRule rule = css_rules.item(i);
+		    if (rule.getCssText().contains(css_class_name))
+		    	return rule.getCssText();		    
+		}	
+	     return "";
+	   }
 	 public static void create_dir() {
 	      String dirname = "/tmp/user/java/bin";
 	      File d = new File(dirname);
@@ -70,7 +110,40 @@ public class ColomnTokenizer {
 	         e.printStackTrace();
 	      }
 	   }
-	 
+		public static void css_selector_test() {
+			// TODO Auto-generated method stub
+			
+
+			try {
+				
+				InputSource source = new InputSource( new StringReader (".h1 {background: #ffcc44}"));
+				CSSOMParser parser = new CSSOMParser(new SACParserCSS3());
+				CSSStyleSheet sheet;
+				
+					sheet = parser.parseStyleSheet(source, null, null);
+				
+				CSSRuleList rules = sheet.getCssRules();
+				for (int i = 0; i < rules.getLength(); i++) {
+				    final CSSRule rule = rules.item(i);
+					    if (rule instanceof CSSStyleRule){
+					    	CSSStyleRule styleRule = (CSSStyleRule) rule;					    	
+						    String selector = styleRule.getSelectorText();
+						    System.out.println(rule.getCssText());
+						    System.out.println(selector);
+					    }
+				}
+				
+				} 
+			catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("In catch block !!!");
+				}
+				
+
+			
+		}
+ 
 	public static void css_test() {
 		// TODO Auto-generated method stub
 		

@@ -28,7 +28,9 @@ public class ColomnTokenizer {
 		
 		//css_selector_test(); [OK]
 		
-		test_access_declaration();
+		//test_access_declaration(); [OK]
+		
+		test_parse_declaration();
 			
 
 		
@@ -167,6 +169,47 @@ public class ColomnTokenizer {
 			}
 			
 			} 
+		catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("In catch block !!!");
+			}			
+
+	}
+	public static void test_parse_declaration() {
+		// Accessing CSS selector
+		
+
+		try {
+			
+			InputSource source = new InputSource( new StringReader (".h1 {background: #ffcc44; margin-top: 4px}"));
+			CSSOMParser parser = new CSSOMParser(new SACParserCSS3());
+			CSSStyleSheet sheet;
+			
+				sheet = parser.parseStyleSheet(source, null, null);
+			
+			CSSRuleList rules = sheet.getCssRules();
+			for (int i = 0; i < rules.getLength(); i++) {
+			    final CSSRule rule = rules.item(i);
+				    if (rule instanceof CSSStyleRule){
+				    	CSSStyleRule styleRule = (CSSStyleRule) rule;					    	
+				    	CSSStyleDeclaration decl = styleRule.getStyle();				    						    	
+					    String selector = styleRule.getSelectorText();					    
+					    
+
+					    System.out.println("CSS Rule:\t\t" + rule.getCssText());
+					    System.out.println("CSS Declaration:\t" + decl.toString());
+						System.out.println("CSS Selector:\t\t" + selector);
+					    System.out.println("Declaration Parsed:");
+						for (int j = 0; j < decl.getLength(); j++) {
+						    final String propName = decl.item(j);
+						    System.out.println("'" + propName + "' has value: '" + decl.getPropertyValue(propName) + "'");
+						}
+
+				    }
+			}
+			
+		} 
 		catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

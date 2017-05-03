@@ -26,7 +26,9 @@ public class ColomnTokenizer {
 		
 		//css_test(); [OK]
 		
-		css_selector_test();
+		//css_selector_test(); [OK]
+		
+		test_access_declaration();
 			
 
 		
@@ -110,40 +112,68 @@ public class ColomnTokenizer {
 	         e.printStackTrace();
 	      }
 	   }
-		public static void css_selector_test() {
-			// TODO Auto-generated method stub
-			
+	public static void css_selector_test() {
+		// Accessing CSS selector
+		
 
-			try {
-				
-				InputSource source = new InputSource( new StringReader (".h1 {background: #ffcc44}"));
-				CSSOMParser parser = new CSSOMParser(new SACParserCSS3());
-				CSSStyleSheet sheet;
-				
-					sheet = parser.parseStyleSheet(source, null, null);
-				
-				CSSRuleList rules = sheet.getCssRules();
-				for (int i = 0; i < rules.getLength(); i++) {
-				    final CSSRule rule = rules.item(i);
-					    if (rule instanceof CSSStyleRule){
-					    	CSSStyleRule styleRule = (CSSStyleRule) rule;					    	
-						    String selector = styleRule.getSelectorText();
-						    System.out.println(rule.getCssText());
-						    System.out.println(selector);
-					    }
-				}
-				
-				} 
-			catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					System.out.println("In catch block !!!");
-				}
-				
-
+		try {
 			
-		}
- 
+			InputSource source = new InputSource( new StringReader (".h1 {background: #ffcc44}"));
+			CSSOMParser parser = new CSSOMParser(new SACParserCSS3());
+			CSSStyleSheet sheet;
+			
+				sheet = parser.parseStyleSheet(source, null, null);
+			
+			CSSRuleList rules = sheet.getCssRules();
+			for (int i = 0; i < rules.getLength(); i++) {
+			    final CSSRule rule = rules.item(i);
+				    if (rule instanceof CSSStyleRule){
+				    	CSSStyleRule styleRule = (CSSStyleRule) rule;					    	
+					    String selector = styleRule.getSelectorText();
+					    System.out.println(rule.getCssText());
+					    System.out.println(selector);
+				    }
+			}
+			
+			} 
+		catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("In catch block !!!");
+			}			
+
+	}
+	public static void test_access_declaration() {
+		// Accessing CSS selector
+		
+
+		try {
+			
+			InputSource source = new InputSource( new StringReader (".h1 {background: #ffcc44}"));
+			CSSOMParser parser = new CSSOMParser(new SACParserCSS3());
+			CSSStyleSheet sheet;
+			
+				sheet = parser.parseStyleSheet(source, null, null);
+			
+			CSSRuleList rules = sheet.getCssRules();
+			for (int i = 0; i < rules.getLength(); i++) {
+			    final CSSRule rule = rules.item(i);
+				    if (rule instanceof CSSStyleRule){
+				    	CSSStyleRule styleRule = (CSSStyleRule) rule;					    	
+				    	CSSStyleDeclaration decl = styleRule.getStyle();
+					    System.out.println("CSS Rule:\t\t" + rule.getCssText());
+					    System.out.println("CSS Declaration:\t" + decl.toString());
+				    }
+			}
+			
+			} 
+		catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("In catch block !!!");
+			}			
+
+	}
 	public static void css_test() {
 		// TODO Auto-generated method stub
 		

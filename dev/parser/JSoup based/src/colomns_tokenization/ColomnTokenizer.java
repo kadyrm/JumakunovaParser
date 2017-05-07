@@ -20,6 +20,8 @@ import org.jsoup.nodes.Element;
 
 
 public class ColomnTokenizer {
+	private static String path = "'./dev/parser/JSoup based/input/'";// testing static field
+	private static Object CSSParser = new CSSOMParser();
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
@@ -30,7 +32,9 @@ public class ColomnTokenizer {
 			Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
 			Element page = doc.select("div.Sect1").first();
 			System.out.println(page.id());
-			
+			path = "Hello World!!!";
+			path = CSSParser.getClass().toString();
+			System.out.println(path);
 			
 			} 
 		catch (IOException e) {

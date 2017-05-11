@@ -3,11 +3,16 @@ package test;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.jsoup.Jsoup;
+import org.jsoup.helper.W3CDom;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.w3c.css.sac.InputSource;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.css.CSSRule;
 import org.w3c.dom.css.CSSRuleList;
 import org.w3c.dom.css.CSSStyleDeclaration;
@@ -17,8 +22,16 @@ import org.w3c.dom.css.CSSStyleSheet;
 import com.steadystate.css.parser.CSSOMParser;
 import com.steadystate.css.parser.SACParserCSS3;
 
-public class Test {
+import cz.vutbr.web.css.CSSFactory;
+import cz.vutbr.web.css.CSSProperty;
+import cz.vutbr.web.css.CSSProperty.Margin;
+import cz.vutbr.web.css.NodeData;
+import cz.vutbr.web.css.TermLength;
+import cz.vutbr.web.domassign.StyleMap;
 
+public class Test {
+	private static Document Jsoup_DOM_doc;
+	private static org.w3c.dom.Document w3c_DOM_doc;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
@@ -30,9 +43,77 @@ public class Test {
 		
 		//test_parse_declaration();
 		
-		test_get_cssSelector();
+		//test_get_cssSelector();
+		 
+		test_w3cDOM();
 			
 
+		
+	}
+	public static void test_Jsytle() throws MalformedURLException{
+		URL url = new URL("http://example.com/");
+		//get the element style
+		StyleMap map = CSSFactory.assignDOM(get_w3cDOM(), "UTF-8", url, "text/css", true);
+		org.w3c.dom.Element element = w3c_DOM_doc.getElementById("Sect1");
+		NodeData style = map.get(element);
+		//get the type of the assigned value
+		CSSProperty.Margin mm = style.getProperty("margin-top");
+		System.out.println("margin-top=" + mm);
+		//if a length is specified, obtain the exact value
+		if (mm == Margin.length)
+		{
+		    TermLength mtop = style.getValue(TermLength.class, "margin-top");
+		    System.out.println("value=" + mtop);
+		}
+
+		
+	}
+	public static void test_w3cDOM(){
+		org.w3c.dom.Document doc = get_w3cDOM();
+		NodeList els = doc.getElementsByTagName("style");
+		//org.w3c.dom.Element el = (org.w3c.dom.Element) els.item(0);
+		System.out.println(els.item(0).getTextContent());
+		
+		
+	}
+	public static void test_change_JsoupDOM(){
+		Document doc = get_JsoupDOM();
+		Elements els = doc.select("style");
+		Element el = els.first();
+		System.out.println(el.toString());
+		
+		
+	}
+	public static org.w3c.dom.Document get_w3cDOM(){
+		//Native method to get css selector of DOM element
+		try {
+			File input = new File("dev/parser/JSoup based/src/colomns_tokenization/standart_input/su-su'lu'k.html");
+			//HTML Parsing
+			Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
+			W3CDom w3cdom = new W3CDom();
+			//w3cdom.convert();			
+			w3c_DOM_doc = w3cdom.fromJsoup(doc);
+			return w3c_DOM_doc;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return w3c_DOM_doc;
+		
+	}
+	public static Document get_JsoupDOM(){
+		//Native method to get css selector of DOM element
+		try {
+			File input = new File("dev/parser/JSoup based/src/colomns_tokenization/standart_input/su-su'lu'k.html");
+			//HTML Parsing
+			Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
+			Jsoup_DOM_doc = doc;
+			return doc;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Jsoup_DOM_doc;
 		
 	}
 	public static void test_get_cssSelector(){

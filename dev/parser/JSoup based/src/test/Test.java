@@ -28,9 +28,26 @@ public class Test {
 		
 		//test_access_declaration(); [OK]
 		
-		test_parse_declaration();
+		//test_parse_declaration();
+		
+		test_get_cssSelector();
 			
 
+		
+	}
+	public static void test_get_cssSelector(){
+		//Native method to get css selector of DOM element
+		try {
+			File input = new File("dev/parser/JSoup based/src/colomns_tokenization/standart_input/su-su'lu'k.html");
+			//HTML Parsing
+			Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");			
+			//***CSS Parsing
+			Element style_tag = doc.select("div").first();
+			System.out.println("" + style_tag.cssSelector());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	public static void mix_test(){

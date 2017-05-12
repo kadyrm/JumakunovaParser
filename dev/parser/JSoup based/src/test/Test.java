@@ -71,8 +71,8 @@ public class Test {
 	public static void test_w3cDOM(){
 		org.w3c.dom.Document doc = get_w3cDOM();
 		NodeList els = doc.getElementsByTagName("style");
-		//org.w3c.dom.Element el = (org.w3c.dom.Element) els.item(0);
-		System.out.println(els.item(0).getTextContent());
+		org.w3c.dom.Element el = (org.w3c.dom.Element) els.item(0);
+		System.out.println(el.getTextContent());
 		
 		
 	}

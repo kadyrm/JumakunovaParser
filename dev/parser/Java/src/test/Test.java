@@ -30,6 +30,7 @@ import cz.vutbr.web.css.TermLength;
 import cz.vutbr.web.domassign.StyleMap;
 
 public class Test {
+	private static String m_path = "dev/parser/Java/input_data/colomns_tokenization/standart_input/su-su'lu'k.html";
 	private static Document Jsoup_DOM_doc;
 	private static org.w3c.dom.Document w3c_DOM_doc;
 	public static void main(String[] args) {
@@ -43,19 +44,19 @@ public class Test {
 		
 		//test_access_declaration(); [OK]
 		
-		//test_parse_declaration();
+		//test_parse_declaration(); //[OK]
 		
-		//test_get_cssSelector();
+		//test_get_cssSelector(m_path); //[OK]
 		 
-		test_w3cDOM();
+		//test_w3cDOM(); //[OK]
 		
-		 /*try {
-			test_Jstyle();
+		 try {
+			test_Jstyle();  //[FAILURE]
 			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		
 			
 
@@ -64,8 +65,8 @@ public class Test {
 	public static void test_Jstyle() throws MalformedURLException{
 		URL url = new URL("http://example.com/");
 		//get the element style
-		String path = "dev/parser/Java/input_data/colomns_tokenization/standart_input/su-su'lu'k.html";
-		StyleMap map = CSSFactory.assignDOM(get_w3cDOM(path), "UTF-8", url, "text/css", true);
+		
+		StyleMap map = CSSFactory.assignDOM(get_w3cDOM(m_path), "UTF-8", url, "text/css", true);
 		org.w3c.dom.Element element = w3c_DOM_doc.getElementById("Sect1");
 		NodeData style = map.get(element);
 		//get the type of the assigned value
@@ -128,10 +129,10 @@ public class Test {
 		return Jsoup_DOM_doc;
 		
 	}
-	public static void test_get_cssSelector(){
+	public static void test_get_cssSelector(String _path){
 		//Native method to get css selector of DOM element
 		try {
-			File input = new File("dev/parser/JSoup based/src/colomns_tokenization/standart_input/su-su'lu'k.html");
+			File input = new File(_path);
 			//HTML Parsing
 			Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");			
 			//***CSS Parsing

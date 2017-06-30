@@ -47,15 +47,15 @@ public class Test {
 		
 		//test_get_cssSelector();
 		 
-		//test_w3cDOM();
+		test_w3cDOM();
 		
-		 try {
+		 /*try {
 			test_Jstyle();
 			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 			
 

@@ -117,7 +117,7 @@ public class Test {
 	public static Document get_JsoupDOM(){
 		//Native method to get css selector of DOM element
 		try {
-			File input = new File("dev/parser/JSoup based/src/colomns_tokenization/standart_input/su-su'lu'k.html");
+			File input = new File(m_path);
 			//HTML Parsing
 			Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
 			Jsoup_DOM_doc = doc;
@@ -146,7 +146,7 @@ public class Test {
 	}
 	public static void mix_test(){
 		try {
-			File input = new File("1.html");
+			File input = new File("m_path");
 			//HTML Parsing
 			Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");			
 			//***CSS Parsing

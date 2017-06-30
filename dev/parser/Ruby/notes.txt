@@ -1,0 +1,5 @@
+1. install Ruby
+2. install nokogiri:
+		$ sudo gem install nokogiri
+3. run the 'first_parsing.rb':
+		$ ruby first_parsing.rb

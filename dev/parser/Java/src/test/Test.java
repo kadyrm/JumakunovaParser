@@ -35,6 +35,8 @@ public class Test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
+		//System.out.println("hellooo!!");
+		
 		//css_test(); [OK]
 		
 		//css_selector_test(); [OK]
@@ -45,15 +47,25 @@ public class Test {
 		
 		//test_get_cssSelector();
 		 
-		test_w3cDOM();
+		//test_w3cDOM();
+		
+		 try {
+			test_Jstyle();
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 			
 
 		
 	}
-	public static void test_Jsytle() throws MalformedURLException{
+	public static void test_Jstyle() throws MalformedURLException{
 		URL url = new URL("http://example.com/");
 		//get the element style
-		StyleMap map = CSSFactory.assignDOM(get_w3cDOM(), "UTF-8", url, "text/css", true);
+		String path = "dev/parser/Java/input_data/colomns_tokenization/standart_input/su-su'lu'k.html";
+		StyleMap map = CSSFactory.assignDOM(get_w3cDOM(path), "UTF-8", url, "text/css", true);
 		org.w3c.dom.Element element = w3c_DOM_doc.getElementById("Sect1");
 		NodeData style = map.get(element);
 		//get the type of the assigned value
@@ -69,7 +81,7 @@ public class Test {
 		
 	}
 	public static void test_w3cDOM(){
-		org.w3c.dom.Document doc = get_w3cDOM();
+		org.w3c.dom.Document doc = get_w3cDOM("dev/parser/Java/input_data/colomns_tokenization/standart_input/su-su'lu'k.html");
 		NodeList els = doc.getElementsByTagName("style");
 		org.w3c.dom.Element el = (org.w3c.dom.Element) els.item(0);
 		System.out.println(el.getTextContent());
@@ -84,10 +96,10 @@ public class Test {
 		
 		
 	}
-	public static org.w3c.dom.Document get_w3cDOM(){
+	public static org.w3c.dom.Document get_w3cDOM(String _path){
 		//Native method to get css selector of DOM element
 		try {
-			File input = new File("dev/parser/JSoup based/src/colomns_tokenization/standart_input/su-su'lu'k.html");
+			File input = new File(_path);
 			//HTML Parsing
 			Document doc = Jsoup.parse(input, "UTF-8", "http://example.com/");
 			W3CDom w3cdom = new W3CDom();

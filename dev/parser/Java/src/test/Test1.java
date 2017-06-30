@@ -1,3 +1,4 @@
+package test;
 import java.io.*;
 import org.w3c.css.sac.*;
 import org.w3c.dom.css.*;
@@ -6,7 +7,7 @@ import com.steadystate.css.parser.CSSOMParser;
 
 public class Test1 {
 
-	public static void main(String[] args) {
+	public static void main1(String[] args) {
 		// TODO Auto-generated method stub
 		
 

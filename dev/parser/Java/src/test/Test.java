@@ -82,7 +82,7 @@ public class Test {
 		
 	}
 	public static void test_w3cDOM(){
-		org.w3c.dom.Document doc = get_w3cDOM("dev/parser/Java/input_data/colomns_tokenization/standart_input/su-su'lu'k.html");
+		org.w3c.dom.Document doc = get_w3cDOM(m_path);
 		NodeList els = doc.getElementsByTagName("style");
 		org.w3c.dom.Element el = (org.w3c.dom.Element) els.item(0);
 		System.out.println(el.getTextContent());
